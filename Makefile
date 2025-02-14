@@ -1,5 +1,6 @@
 NAME	= libasm.a
-SRCS	= src/ft_strlen.s src/ft_write.s src/ft_strcmp.s src/ft_strcpy.s src/ft_read.s src/ft_strdup.s
+FILES	= ft_strlen.s ft_write.s ft_strcmp.s ft_strcpy.s ft_read.s ft_strdup.s
+SRCS	= $(addprefix src/x86_64/, ${FILES})
 OBJS	= ${SRCS:.s=.o}
 TEST_SRCS = main.c
 TEST_OBJS = ${TEST_SRCS:.c=.o}
@@ -14,6 +15,9 @@ TEST 	= tests
 
 all:		${NAME}
 
+arm:
+	${MAKE} -f arm.mk tests
+
 .s.o:
 				${ASM} $< -o ${<:.s=.o}
 
@@ -24,6 +28,7 @@ clean:
 
 fclean:		clean
 				${RM} ${NAME} ${TEST}
+				${MAKE} -f arm.mk fclean
 
 re:			fclean all
 

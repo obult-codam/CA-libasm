@@ -1,45 +1,46 @@
-#include <stddef.h>
+#include "libasm.h"
 #include <stdio.h>
+#include <errno.h>
 
-extern unsigned int ft_strlen(char *str);
-extern void ft_write(char *str);
-extern int ft_strcmp(const char *s1, const char *s2);
-extern char *ft_strcpy(char *dest, const char *src);
-extern ssize_t ft_read(int fildes, void *buf, size_t nbyte);
-extern char *ft_strdup(const char *s);
+
 
 
 int main(void)
 {
+	printf("errno address: %p\n", (void *)&errno);
+
 	/* strlen */
-	// unsigned int len = ft_strlen("hello");
-	// unsigned int len = 10;
-	// printf("len: %u\n", len);
+	unsigned int len = ft_strlen("hell");
+	printf("len: %u\n", len);
 
 	/* write */
-	// ft_write("string\n");
+	printf("calling write\n");
+	ft_write(1, "string\n", ft_strlen("string\n"));
+	printf("write has been called\n");
 
 	/* strcmp */
-	// int result;
-	// result = ft_strcmp("abce", "abcd");
-	// printf("res: %i\n", result);
+	int result;
+	result = ft_strcmp("abce", "abcd");
+	printf("res: %i\n", result);
 
 	/* strcpy */
-	// char dest[16];
-	// char src[] = "source";
-	// char *ret_ptr;
-	// ret_ptr = ft_strcpy(dest, src);
-	// printf("strcpy: b: %u, dest: %s\n", ret_ptr == dest, dest);
+	char dest[16];
+	char src[] = "source";
+	char *ret_ptr;
+	ret_ptr = ft_strcpy(dest, src);
+	printf("strcpy: b: %u, dest: %s\n", ret_ptr == dest, dest);
 
 	/* read */
-	// int len = 0;
-	// char buff[20];
-	// buff[10] = 0;
-	// printf("write something short:\n");
+	int sLen = 0;
+	static char buff[20];
+	printf("write something short:\n");
 
 	// // run the function
-	// len = ft_read(0, buff, 10);
-	// printf("len: %i, read: %s\n", len, buff);
+	sLen = ft_read(0, buff, 10);
+	printf("sLen: %i, read: %s", sLen, buff);
+
+	/* Fail read for errno. */
+	printf("return val = %lu\n", ft_read(-1, buff, 10));
 
 	/* strdup */
 	char *dup = ft_strdup("duplicate");
